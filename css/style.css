@@ -1,0 +1,387 @@
+body {
+    font-family: monospace;
+    color: black;
+    margin: 0;
+    margin-left: 0.5%;
+    line-height: 0.9;
+    /* reserve right half for photos column */
+    margin-right: 50%;
+}
+
+/* film list */
+
+.film-list {
+    margin: 10px 0 0 10px; /* remove top margin, keep left */
+    font-size: 50px;
+    max-width: 44vw;
+    overflow-wrap: break-word;
+}
+
+.film {
+    margin: 0 0 10px 10px;
+    font-size: 50px;
+    line-height: 0.9;
+    cursor: pointer;
+    display: block; /* stack films so titles naturally wrap */
+    max-width: 44vw;
+}
+
+.film-description {
+    display: none;
+}
+
+.film-runtime {
+    display: none;
+}
+
+.film-credit {
+    display: none;
+}
+
+.name {
+    font-size: 50px;
+    margin: 50px 0 10px 10px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* hover */
+
+.film:hover,
+.name:hover {
+    color: #ffffff;
+    background-color: rgb(0, 238, 255);
+}
+
+/* active state */
+
+.film.active,
+.name.active {
+    color: #ffffff;
+    background-color: rgb(0, 238, 255);
+}
+
+/* panel */
+.panel {
+    position: fixed;
+    top: 0;
+    right: -54%;
+    width: 54%;
+    height: 100vh;
+    background: white;
+
+    padding: 30px 25px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border-left: 1px solid rgb(149, 138, 138);
+    z-index: 3;
+}
+
+.panel::before {
+    content: none;
+}
+
+.panel * {
+    position: relative;
+}
+
+/* photographs column (right 50% of the viewport) */
+.photos-column {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 20px;
+    overflow-y: auto;
+    border-left: 1px solid rgba(0,0,0,0.06);
+    z-index: 1;
+}
+
+.photos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.photos-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.photos-grid {
+    grid-auto-rows: auto;
+}
+
+@media (max-width: 900px) {
+    .photos-column { width: 100%; }
+    .photos-grid { grid-template-columns: 1fr; }
+}
+
+/* open state (no animation) */
+.panel.open {
+    right: 0;
+}
+
+.panel.open + .photos-column {
+    display: none;
+}
+
+/* unified typography (no hierarchy) */
+.panel p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.panel p.description {
+    margin-bottom: 20px;
+}
+
+.panel p.film-note {
+    margin: 0;
+    padding: 0px;
+    background-color: none;
+    font-size: 14px;
+    color: #333333;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.panel p.runtime {
+    font-size: 14px;
+    color: #777;
+    margin: 0 0 20px 0;
+    line-height: 1;
+    padding-bottom: 8px;
+}
+.panel p.credit {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+    line-height: 1;
+}
+
+.panel .credit-job {
+    flex-shrink: 0;
+    white-space: nowrap;
+    order: 1;
+    margin-right: 3px;
+}
+
+.panel .credit-name {
+    flex-shrink: 0;
+    white-space: nowrap;
+    text-align: right;
+    order: 3;
+    margin-left: 3px;
+}
+
+.panel p.credit::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px dotted #555;
+    margin: 0;
+    height: 0;
+    align-self: center;
+    order: 2;
+}
+
+/* credits dropdown */
+.credits-group {
+    margin: 20px 0;
+    border-bottom: 1px solid rgb(149, 138, 138);
+}
+
+.credits-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px 0;
+    font-size: 16px;
+    user-select: none;
+}
+
+.credits-arrow {
+    display: inline-block;
+    width: 12px;
+    text-align: center;
+    transition: transform 0.2s;
+    font-weight: normal;
+}
+
+.credits-content {
+    display: none;
+    padding: 10px 0 10px 0px;
+}
+
+.credits-group.open .credits-content {
+    display: block;
+}
+
+.credits-group.open .credits-arrow {
+    transform: rotate(90deg);
+}
+
+.credits-toggle:hover {
+    color: rgb(0, 238, 255);
+}
+
+/* stills dropdown */
+.stills-group {
+    margin: 20px 0;
+    border-bottom: 1px solid rgb(149, 138, 138);
+}
+
+.stills-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px 0;
+    font-size: 16px;
+    user-select: none;
+}
+
+.stills-arrow {
+    display: inline-block;
+    width: 12px;
+    text-align: center;
+    transition: transform 0.2s;
+    font-weight: normal;
+}
+
+.stills-content {
+    display: none;
+    padding: 10px 0 10px 0px;
+}
+
+.stills-group.open .stills-content {
+    display: block;
+}
+
+.stills-group.open .stills-arrow {
+    transform: rotate(90deg);
+}
+
+.stills-toggle:hover {
+    color: rgb(0, 238, 255);
+}
+
+/* video nearly full bleed */
+.video {
+    width: 100%;
+    height: 360px;
+    margin: 10px 0;
+    border-bottom: 1px solid rgb(149, 138, 138);
+}
+
+/* stills horizontal scroll */
+.stills {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    overflow-x: auto;
+    margin: 5px 0;
+    padding-top: 0;
+    width: 100%;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+/* CV panel sections */
+
+.cv-name {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.cv-description {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+}
+
+.cv-contact,
+.cv-credits,
+.cv-awards,
+.cv-education {
+    margin: 20px 0;
+}
+
+.cv-contact h3,
+.cv-credits h3,
+.cv-awards h3,
+.cv-education h3 {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+    font-weight: normal;
+}
+
+.cv-contact ul,
+.cv-credits ul,
+.cv-awards ul,
+.cv-education ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cv-contact li,
+.cv-credits li,
+.cv-awards li,
+.cv-education li {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+#cv-content {
+    display: none;
+}
+
+.stills img {
+    object-fit: contain;
+    object-position: top;
+    display: block;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+}
+
+/* return button minimal */
+.nav-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.close-btn {
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.nav-btn {
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.nav-btn:hover,
+.close-btn:hover {
+    color: rgb(0, 238, 255);
+}
