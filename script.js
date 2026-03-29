@@ -258,7 +258,7 @@ async function buildPhotosGallery() {
     } catch {}
 
     const max = 30;
-    const exts = ['jpg','jpeg','png','webp'];
+    const exts = ['jpg','JPG','jpeg','png','webp'];
 
     for (let i = 1; i <= max; i++) {
         for (const ext of exts) {
